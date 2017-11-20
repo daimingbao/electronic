@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.electronic.dao.OrderItemMapper" >
+  <resultMap id="BaseResultMap" type="com.electronic.model.OrderItem" >
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <id column="good_id" property="goodId" jdbcType="VARCHAR" />
+    <result column="deal_price" property="dealPrice" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, good_id, deal_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.electronic.model.OrderItemKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_item
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.electronic.model.OrderItemKey" >
+    delete from order_item
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.electronic.model.OrderItem" >
+    insert into order_item (order_id, good_id, deal_price
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{goodId,jdbcType=VARCHAR}, #{dealPrice,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.electronic.model.OrderItem" >
+    insert into order_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="dealPrice != null" >
+        deal_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="dealPrice != null" >
+        #{dealPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.electronic.model.OrderItem" >
+    update order_item
+    <set >
+      <if test="dealPrice != null" >
+        deal_price = #{dealPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.electronic.model.OrderItem" >
+    update order_item
+    set deal_price = #{dealPrice,jdbcType=DECIMAL}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and good_id = #{goodId,jdbcType=VARCHAR}
+  </update>
+</mapper>
