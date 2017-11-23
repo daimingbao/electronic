@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.electronic.dao.OrdersMapper;
+import com.electronic.dto.req.QryOrderDetailReq;
+import com.electronic.dto.res.QryOrderDetailRes;
 import com.electronic.model.Orders;
 import com.electronic.model.OrdersKey;
 import com.electronic.service.OrdersService;
@@ -42,5 +44,12 @@ public class OrdersServiceImpl implements OrdersService {
 	public int updateByPrimaryKey(Orders record) {
 		return ordersMapper.updateByPrimaryKey(record);
 	}
+
+    @Override
+    public QryOrderDetailRes qryOrderDetail(QryOrderDetailReq req) {
+        QryOrderDetailRes res = new QryOrderDetailRes();
+        res.setData(ordersMapper.qryOrderDetail(req));
+        return res;
+    }
 
 }

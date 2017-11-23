@@ -15,12 +15,14 @@ public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
 
+	@ResponseBody
     @RequestMapping("/deleteByPrimaryKey")
 	public int deleteByPrimaryKey(GoodsKey key) {
 		return goodsService.deleteByPrimaryKey(key);
 	}
 
     @RequestMapping("/insertSelective")
+    @ResponseBody
 	public int insertSelective(Goods record) {
 		return goodsService.insertSelective(record);
 	}
@@ -32,6 +34,7 @@ public class GoodsController {
 	}
 
     @RequestMapping("/updateByPrimaryKeySelective")
+    @ResponseBody
 	public int updateByPrimaryKeySelective(Goods record) {
 		return goodsService.updateByPrimaryKeySelective(record);
 	}
