@@ -10,7 +10,8 @@ public class UserInfo extends UserInfoKey {
     private String telphone;
 
     private String address;
-
+    
+    private String line;
     public String getUser_name() {
         return user_name;
     }
@@ -49,5 +50,13 @@ public class UserInfo extends UserInfoKey {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
     }
 }

@@ -6,6 +6,8 @@ public class Orders extends OrdersKey {
     private String user_id;
 
     private Date order_time;
+    
+    private String order_status;
 
     public String getUser_id() {
         return user_id;
@@ -21,5 +23,13 @@ public class Orders extends OrdersKey {
 
     public void setOrder_time(Date order_time) {
         this.order_time = order_time;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
     }
 }

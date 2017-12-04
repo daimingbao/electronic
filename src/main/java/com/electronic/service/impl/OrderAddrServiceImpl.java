@@ -1,7 +1,4 @@
-/**
- * <p>Copyright: Copyright (c) 2017</p>
- * <p>Company: 杭州恒生电子股份有限公司</p>
- */
+
 package com.electronic.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;

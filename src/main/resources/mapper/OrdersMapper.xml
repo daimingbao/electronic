@@ -4,10 +4,11 @@
   <resultMap id="BaseResultMap" type="com.electronic.model.Orders" >
     <id column="order_id" property="order_id" jdbcType="VARCHAR" />
     <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    <result column="order_status" property="order_status" jdbcType="VARCHAR" />
     <result column="order_time" property="order_time" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    order_id, user_id, order_time
+    order_id, user_id, order_time,order_status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.electronic.model.OrdersKey" >
     select 
@@ -17,9 +18,7 @@
   </select>
   
   <select id="qryOrderDetail" parameterType="com.electronic.dto.req.QryOrderDetailReq" resultType="com.electronic.model.OrderDetail">
-  
-SELECT * FROM( SELECT u.*,o.order_id,o.order_time,oi.good_id,oi.good_num,oi.deal_price,g.good_img,g.good_name,g.good_price FROM user_info u LEFT JOIN orders o ON u.user_id = o.user_id LEFT JOIN order_item oi ON o.order_id = oi.order_id
-LEFT JOIN goods g ON oi.good_id = g.good_id ) a LEFT JOIN order_addr oa ON oa.order_id = a.order_id 
+SELECT * FROM( SELECT u.*,o.order_id,o.order_time,o.order_status,oi.good_id,oi.good_num,oi.deal_price,oi.message,g.good_img,g.good_name,g.good_price FROM user_info u LEFT JOIN orders o ON u.user_id = o.user_id LEFT JOIN order_item oi ON o.order_id = oi.order_id LEFT JOIN goods g ON oi.good_id = g.good_id WHERE o.order_id = oi.order_id) a LEFT JOIN order_addr oa ON oa.order_id = a.order_id
 <where>
 	<trim prefixOverrides="AND">
 		<if test="user_id != null">
@@ -28,6 +27,14 @@ LEFT JOIN goods g ON oi.good_id = g.good_id ) a LEFT JOIN order_addr oa ON oa.or
 		<if test="order_id != null ">
 			AND a.order_id = #{order_id}
 		</if>
+		<if test="order_status != null and order_status != ''">
+			AND a.order_status = #{order_status}
+		</if>
+		<if test="order_id_pos != null and order_id_pos != '' ">
+			AND a.order_id > #{order_id_pos}
+			limit #{request_num}
+		</if>
+		
 	</trim>
 </where>
 
@@ -52,9 +59,9 @@ LEFT JOIN goods g ON oi.good_id = g.good_id ) a LEFT JOIN order_addr oa ON oa.or
       <if test="user_id != null" >
         user_id,
       </if>
-      <if test="order_time != null" >
+     
         order_time,
-      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="order_id != null" >
@@ -63,19 +70,14 @@ LEFT JOIN goods g ON oi.good_id = g.good_id ) a LEFT JOIN order_addr oa ON oa.or
       <if test="user_id != null" >
         #{user_id,jdbcType=VARCHAR},
       </if>
-      <if test="order_time != null" >
-        #{order_time,jdbcType=DATE},
-      </if>
+        now(),
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.electronic.model.Orders" >
     update orders
     <set >
-      <if test="user_id != null" >
-        user_id = #{user_id,jdbcType=VARCHAR},
-      </if>
-      <if test="order_time != null" >
-        order_time = #{order_time,jdbcType=DATE},
+      <if test="order_status != null" >
+        order_status = #{order_status,jdbcType=VARCHAR}
       </if>
     </set>
     where order_id = #{order_id,jdbcType=VARCHAR}

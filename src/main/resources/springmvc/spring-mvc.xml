@@ -21,6 +21,9 @@
 <!-- HandlerAdapter -->  
 <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>  
  
+ <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+    <mvc:resources mapping="/js/**" location="/js/" />
      <!-- 对模型视图添加前后缀 -->
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
       p:prefix="/WEB-INF/view/" p:suffix=".jsp"/>

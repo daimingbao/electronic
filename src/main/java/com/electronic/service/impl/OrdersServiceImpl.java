@@ -48,7 +48,9 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public QryOrderDetailRes qryOrderDetail(QryOrderDetailReq req) {
         QryOrderDetailRes res = new QryOrderDetailRes();
-        res.setData(ordersMapper.qryOrderDetail(req));
+        
+        
+        res.setList(ordersMapper.qryOrderDetail(req));
         return res;
     }
 

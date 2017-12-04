@@ -17,15 +17,17 @@ import com.electronic.model.OrderDetail;
  */
 public class QryOrderDetailRes {
     
-    private List<OrderDetail> data;
+    private List<OrderDetail> list;
 
-    public List<OrderDetail> getData() {
-        return data;
+    public List<OrderDetail> getList() {
+        return list;
     }
 
-    public void setData(List<OrderDetail> data) {
-        this.data = data;
+    public void setList(List<OrderDetail> list) {
+        this.list = list;
     }
+
+    
 
     
 }

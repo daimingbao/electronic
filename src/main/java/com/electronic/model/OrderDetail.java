@@ -31,9 +31,17 @@ public class OrderDetail {
     
     private String orderId;
 
-    private String goodId;
+    private String good_id;
+    
+    private String good_name;
     
     private Date order_time;
+    
+    private BigDecimal good_price;
+    
+    private  String message;
+    
+    private String line;
 
     
     /**
@@ -148,14 +156,6 @@ public class OrderDetail {
         this.orderId = orderId;
     }
 
-    public String getGoodId() {
-        return goodId;
-    }
-
-    public void setGoodId(String goodId) {
-        this.goodId = goodId;
-    }
-
     public String getAddr_id() {
         return addr_id;
     }
@@ -210,5 +210,45 @@ public class OrderDetail {
 
     public void setOrder_time(Date order_time) {
         this.order_time = order_time;
+    }
+
+    public BigDecimal getGood_price() {
+        return good_price;
+    }
+
+    public void setGood_price(BigDecimal good_price) {
+        this.good_price = good_price;
+    }
+
+    public String getGood_id() {
+        return good_id;
+    }
+
+    public void setGood_id(String good_id) {
+        this.good_id = good_id;
+    }
+
+    public String getGood_name() {
+        return good_name;
+    }
+
+    public void setGood_name(String good_name) {
+        this.good_name = good_name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
     }
 }

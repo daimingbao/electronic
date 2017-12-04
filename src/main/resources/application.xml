@@ -9,6 +9,7 @@
            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
            http://www.springframework.org/schema/context  
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
      
      <!-- 引入jdbc配置文件 -->  
      <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -60,5 +61,69 @@
 
 	<!-- 自动扫描注解的bean -->
 	<context:component-scan base-package="com.electronic.service.impl" />
+	
+	<!-- redis集成spring -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.maxTotal}"></property>
+		<property name="maxIdle" value="${redis.maxIdle}"></property>
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>
+		<property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}"></property>
+		<property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"></property>
+	</bean>
+
+    <bean id="connectionFactory"
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="poolConfig" ref="jedisPoolConfig" />
+        <property name="hostName" value="${redis.host}"></property>
+        <property name="port" value="${redis.port}" />
+        <property name="password" value="${redis.password}" />
+        <property name="timeout" value="${redis.timeout}" />
+		<property name="database" value="${redis.default.db}" />
+    </bean>
+
+<!-- 
+    <bean id="resourcePropertySource" class="org.springframework.core.io.support.ResourcePropertySource">
+        <constructor-arg name="name" value="redis.properties"/>
+        <constructor-arg name="resource" value="classpath:conf/redis.properties"/>
+    </bean>
+
+    <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+        <constructor-arg name="propertySource" ref="resourcePropertySource"/>
+    </bean>
+
+    
+	<bean id="connectionFactory"
+		    class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<constructor-arg name="clusterConfig" ref="redisClusterConfiguration"/>
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+		<property name="password" value="${redis.password}" />
+		<property name="timeout" value="${redis.timeout}" />
+	</bean>
+-->
+	
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="keySerializer">
+            <bean
+                class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+        <property name="valueSerializer">
+            <bean
+                class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+        <property name="hashKeySerializer">
+           <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashValueSerializer">
+           <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer">
+           </bean>
+        </property>
+
+    </bean>
+
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+	</bean>
 
 </beans>
