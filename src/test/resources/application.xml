@@ -52,7 +52,7 @@
     <!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath:mapper/*.xml"/>  
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<!-- <property name="typeAliasesPackage" value="com.tiantian.ckeditor.model" 
 			/> -->
@@ -60,5 +60,13 @@
 
 	<!-- 自动扫描注解的bean -->
 	<context:component-scan base-package="com.electronic.service.impl" />
+
+	<bean class="com.electronic.aop.LogAop" id="logAop" />
+	<aop:config >
+		<aop:pointcut id="servicePointcut" expression="execution(public * com.electronic.service..*(..))" />
+		<aop:aspect ref="logAop"  >
+			<aop:before method="log" pointcut-ref="servicePointcut" />
+		</aop:aspect>
+	</aop:config>
 
 </beans>
